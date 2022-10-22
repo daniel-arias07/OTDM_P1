@@ -5,8 +5,38 @@ library(tidyverse)
 ```{r}
 data <- read.csv("uo_nn_batch_123456-789101.csv", sep = ";")
 summary(data)
+str(data)
 ```
 
 ```{r}
+# New Column Method Name
 
+data$Method <- "GM"
+data$Method[data$isd == 3] <- "QNM"
+data$Method[data$isd == 7] <- "SGM"
 ```
+
+## Convergence
+```{r}
+p <- data %>% ggplot(aes(x = factor(la), y = L., color = Method)) +
+    geom_boxplot() +
+    geom_jitter(shape = 16, position = position_jitter(0.2)) +
+    xlab("Lambda") +
+    ylab("Optiaml L") +
+    theme(
+        legend.title = element_text(color = "blue", size = 10),
+        legend.text = element_text(color = "red")
+    )
+
+p
+# facet_wrap(~num_target)
+    ```
+
+### Global
+### Local
+### Discussion
+
+## Performance
+### Large Problems
+### Accuracy
+
