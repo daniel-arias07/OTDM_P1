@@ -35,7 +35,7 @@ boxplot_la_l_opt <- data %>%
     xlab("") +
     ylab("Optiaml L") +
     guides(col = guide_legend(title = "Lambda")) +
-    ggtitle("L* vs Lambda") +
+    ggtitle("Optmial L per Lambda") +
     theme(
         legend.title = element_text(color = "blue", size = 10),
         legend.text = element_text(color = "red"),
@@ -193,7 +193,7 @@ tex_niter_jitter_plot <- data %>%
     geom_smooth(se = FALSE) +
     scale_x_continuous(breaks = seq(0, 10, by = 1)) +
     xlab("Target number") +
-    ylab("Time of execution (s)") +
+    ylab("") +
     facet_wrap(~Method + factor(la)) +
     ggtitle("Execution time per iteration") +
     theme(
@@ -274,27 +274,6 @@ niter_tex_g_plot <- data %>%
     ylab("Time of execution (s)") +
     facet_wrap(~factor(la) + Method) +
     ggtitle("Number of Iterations vs Time of execution") +
-    theme(
-        legend.title = element_text(color = "blue", size = 10),
-        plot.title = element_text(
-            color = "black",
-            size = 30,
-            face = "bold",
-            hjust = 0.5)
-    )
-niter_tex_g_plot
-```
-
-```{r}
-niter_tex_g_plot <- data %>%
-    ggplot(aes(x = num_target, y = tex / niter)) +
-    geom_point() +
-    geom_smooth(se = FALSE) +
-    scale_x_continuous(breaks = seq(0, 10, by = 1)) +
-    xlab("Target Number") +
-    ylab("") +
-    facet_wrap(~factor(la) + Method) +
-    ggtitle("tex/niter per target number") +
     theme(
         legend.title = element_text(color = "blue", size = 10),
         plot.title = element_text(
