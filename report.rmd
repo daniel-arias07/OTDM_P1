@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+chunk_output_type: console
+---
 ```{r}
 library(tidyverse)
 ```
@@ -39,7 +44,34 @@ boxplot_la_l_opt
 
 
 ```{r}
-# Iterations per Method
+#Other option
+
+# Lambda vs L*
+
+boxplot_la_l_opt <- data %>%
+    ggplot(aes(x = Method, y = L., color =factor(la))) +
+    geom_boxplot()  +
+    ylab("Optiaml L") +
+    theme(
+        legend.title = element_text(color = "blue", size = 10),
+        legend.text = element_text(color = "red")
+    )
+
+boxplot_la_l_opt
+
+```
+
+
+
+```{r}
+table_d<- data %>%
+  group_by(la,Method) %>% 
+  summarize(mean_L = mean(L.))
+table_d
+```
+
+```{r}
+# Iterations per Method for each target number
 
 niter_g_plot <- data %>%
     ggplot(aes(x = num_target, y = niter, color = Method)) +
@@ -60,6 +92,51 @@ l_opt_la_g_plot <- data %>%
 
 l_opt_la_g_plot
 ```
+
+
+
+```{r}
+
+
+# Execution time per Method
+
+g_plot_tex <- data %>%
+    ggplot(aes(x = num_target, y = tex, color = Method)) +
+    geom_line() +
+    scale_y_continuous(trans = "log2") +
+    scale_x_continuous(breaks = seq(0, 10, by = 1)) +
+    facet_grid(~factor(la), scale="free")
+
+g_plot_tex
+
+
+```
+
+
+```{r}
+# Execution time per iterations 
+boxplot_tpi <- data %>%
+    ggplot(aes(x =  Method, y = tex/niter, color = Method)) +
+    geom_boxplot() +
+    xlab("Algorithm") +
+    ylab("Execution time per iteration") 
+
+boxplot_tpi
+```
+
+
+```{r}
+# Accuracy per algorithm 
+boxplot_tpi <- data %>%
+    ggplot(aes(x =  Method, y = te_acc, color = factor(la))) +
+    geom_boxplot() +
+    xlab("Algorithm") +
+    ylab("Test Accuracy")
+
+boxplot_tpi
+```
+
+
 
 ### Local
 
