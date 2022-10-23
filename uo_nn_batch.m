@@ -3,7 +3,8 @@ clear;
 % Parameters.
 %
 tr_seed = 123456; te_seed = 789101;
-tr_p = 250; te_q = 250; tr_freq = 0.5;                        % Datasets generation
+% tr_p = 250; te_q = 250; tr_freq = 0.5;                      % Datasets generation
+tr_p = 20000; te_q = tr_p/10; tr_freq = 0.0;                   % Datasets generation
 epsG = 10^-6; kmax = 1000;                                    % Stopping condition.
 ils=3; ialmax = 1; kmaxBLS=10; epsal=10^-3; c1=0.01; c2=0.45; % Linesearch.
 icg = 2; irc = 2 ; nu = 1.0;                                  % Search direction.
