@@ -8,9 +8,10 @@ library(tidyverse)
 ```
 
 ```{r}
-data <- read.csv("uo_nn_batch_123456-789101.csv", sep = ";")
+data <- read.csv("uo_nn_batch_24091993-24121990-20000.csv", sep = ";")
 summary(data)
 str(data)
+tr_p <- "20000"
 ```
 
 ```{r}
@@ -28,7 +29,8 @@ data$Method[data$isd == 7] <- "SGM"
 ```{r}
 # Lambda vs L*
 
-boxplot_la_l_opt <- data %>%
+pdf(file = paste0("figures\\", tr_p, "\\Optmial_L_per_Lambda.pdf"))
+data %>%
     ggplot(aes(x = Method, y = L., color = factor(la))) +
     geom_boxplot() +
     geom_jitter(shape = 16, position = position_jitter(0.2)) +
@@ -45,8 +47,7 @@ boxplot_la_l_opt <- data %>%
             face = "bold",
             hjust = 0.5)
     )
-
-boxplot_la_l_opt
+dev.off()
 ```
 
 
@@ -62,8 +63,8 @@ table_d
 
 ```{r}
 # Stacked Optimal L per lambda
-
-l_opt_la_g_plot <- data %>%
+pdf(file = paste0("figures\\", tr_p, "\\Stacked_Optimal_L_lambda.pdf"))
+data %>%
     ggplot(aes(x = factor(la), y = L., fill = Method)) +
     geom_bar(stat = "identity") +
     xlab("Lambda") +
@@ -79,7 +80,7 @@ l_opt_la_g_plot <- data %>%
             face = "bold",
             hjust = 0.5)
     )
-l_opt_la_g_plot
+dev.off()
 ```
 
 
@@ -89,8 +90,8 @@ l_opt_la_g_plot
 
 ```{r}
 # Time Execution per Method
-
-tex_g_plot <- data %>%
+pdf(file = paste0("figures\\", tr_p, "\\Time_Execution_per_Method.pdf"))
+data %>%
     ggplot(aes(x = num_target, y = tex, color = Method)) +
     geom_line() +
     facet_grid(~factor(la)) +
@@ -108,12 +109,13 @@ tex_g_plot <- data %>%
             face = "bold",
             hjust = 0.5)
     )
-tex_g_plot
+dev.off()
 ```
 
 ```{r}
 # Stacked Time Execution
-stck_tex_g_plot <- data %>%
+pdf(file = paste0("figures\\", tr_p, "\\Stacked_Time_Execution.pdf"))
+data %>%
     ggplot(aes(x = factor(num_target), y = niter, fill = factor(isd))) +
     geom_bar(stat = "identity") +
     scale_y_continuous(trans = "log10") +
@@ -130,16 +132,15 @@ stck_tex_g_plot <- data %>%
             hjust = 0.5)
     ) +
     scale_fill_discrete(labels = c(unique(data$Method)))
-
-stck_tex_g_plot
+dev.off()
 ```
 
 
 
 ```{r}
 # Iterations per Method for each target number
-
-niter_g_plot <- data %>%
+pdf(file = paste0("figures\\", tr_p, "\\Iterations_per_Method.pdf"))
+data %>%
     ggplot(aes(x = num_target, y = niter, color = Method)) +
     geom_line() +
     scale_y_continuous(trans = "log2") +
@@ -157,14 +158,14 @@ niter_g_plot <- data %>%
             face = "bold",
             hjust = 0.5)
     )
-
-niter_g_plot
+dev.off()
 ```
 
 
 ```{r}
 # Execution time per iterations
-boxplot_tpi <- data %>%
+pdf(file = paste0("figures\\", tr_p, "\\Execution_time_per_iterations.pdf"))
+data %>%
     ggplot(aes(x =  Method, y = tex/niter, color = Method)) +
     geom_boxplot() +
     scale_y_continuous(trans = "log10") +
@@ -180,14 +181,13 @@ boxplot_tpi <- data %>%
             face = "bold",
             hjust = 0.5)
     )
-
-
-boxplot_tpi
+dev.off()
 ```
 
 ```{r}
 # Running time per iteration
-tex_niter_jitter_plot <- data %>%
+pdf(file = paste0("figures\\", tr_p, "\\Execution_time_per_iteration.pdf"))
+data %>%
     ggplot(aes(x = num_target, y = tex/niter)) +
     geom_jitter() +
     geom_smooth(se = FALSE) +
@@ -204,9 +204,7 @@ tex_niter_jitter_plot <- data %>%
             face = "bold",
             hjust = 0.5)
     )
-
-
-tex_niter_jitter_plot
+dev.off()
 ```
 
 
@@ -217,7 +215,8 @@ tex_niter_jitter_plot
 ### Accuracy
 ```{r}
 # Training accuracy per Method
-tr_acc_g_plot <- data %>%
+pdf(file = paste0("figures\\", tr_p, "\\Training_Accuracy.pdf"))
+data %>%
     ggplot(aes(x = Method, y = tr_acc, color = Method)) +
     geom_boxplot() +
     geom_jitter(shape = 16, position = position_jitter(0.2)) +
@@ -235,14 +234,13 @@ tr_acc_g_plot <- data %>%
             face = "bold",
             hjust = 0.5)
     )
-
-
-tr_acc_g_plot
+dev.off()
 ```
 
 ```{r}
 # Test accuracy per Method
-te_acc_g_plot <- data %>%
+pdf(file = paste0("figures\\", tr_p, "\\Test_Accuracy.pdf"))
+data %>%
     ggplot(aes(x = Method, y = te_acc, color = Method)) +
     geom_boxplot() +
     geom_jitter(shape = 16, position = position_jitter(0.2)) +
@@ -260,12 +258,12 @@ te_acc_g_plot <- data %>%
             face = "bold",
             hjust = 0.5)
     )
-
-te_acc_g_plot
+dev.off()
 ```
 
 ```{r}
-niter_tex_g_plot <- data %>%
+pdf(file = paste0("figures\\", tr_p, "\\Number_Iterations_vs_Time_Execution.pdf"))
+data %>%
     ggplot(aes(x = niter, y = tex)) +
     geom_point() +
     geom_smooth(se = FALSE) +
@@ -282,5 +280,8 @@ niter_tex_g_plot <- data %>%
             face = "bold",
             hjust = 0.5)
     )
-niter_tex_g_plot
+dev.off()
+```
+```{r}
+
 ```
