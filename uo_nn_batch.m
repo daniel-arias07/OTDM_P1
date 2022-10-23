@@ -2,7 +2,8 @@ clear;
 %
 % Parameters.
 %
-tr_seed = 123456; te_seed = 789101;
+tr_seed = 24091993; te_seed = 24121990;
+% tr_seed = 123456; te_seed = 789101;
 % tr_p = 250; te_q = 250; tr_freq = 0.5;                      % Datasets generation
 tr_p = 20000; te_q = tr_p/10; tr_freq = 0.0;                   % Datasets generation
 epsG = 10^-6; kmax = 1000;                                    % Stopping condition.
@@ -14,7 +15,7 @@ sg_emax = kmax; sg_ebest = floor(0.01*sg_emax);               % SGM stopping con
 % Optimization
 %
 global iheader; iheader = 1;
-csvfile = strcat('uo_nn_batch_',num2str(tr_seed),'-',num2str(te_seed),'.csv');
+csvfile = strcat('uo_nn_batch_',num2str(tr_seed),'-',num2str(te_seed),'-',num2str(tr_p),'.csv');
 fileID = fopen(csvfile ,'w');
 t1=clock;
 for num_target = [1:10]
