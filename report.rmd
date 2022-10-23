@@ -41,19 +41,83 @@ boxplot_la_l_opt
 ```{r}
 # Iterations per Method
 
-g_plot <- data %>%
+niter_g_plot <- data %>%
     ggplot(aes(x = num_target, y = niter, color = Method)) +
     geom_line() +
     scale_y_continuous(trans = "log2") +
     scale_x_continuous(breaks = seq(0, 10, by = 1)) +
     facet_grid(~factor(la))
 
-g_plot
+niter_g_plot
 ```
+
+```{r}
+# Stacked Optimal L per lambda
+
+l_opt_la_g_plot <- data %>%
+    ggplot(aes(x = factor(la), y = L., fill = factor(isd))) +
+    geom_bar(stat = "identity")
+
+l_opt_la_g_plot
+```
+
 ### Local
+
+```{r}
+# Time Execution per Method
+
+tex_g_plot <- data %>%
+    ggplot(aes(x = num_target, y = tex, color = Method)) +
+    geom_line() +
+    facet_grid(~factor(la)) +
+    scale_x_continuous(breaks = seq(0, 10, by = 1)) +
+    scale_y_continuous(trans = "log10") +
+    ylab("Time of Execution (s)") +
+    xlab("Target Number")
+tex_g_plot
+```
+
+```{r}
+# Stacked Time Execution
+    # ggplot(aes(x = num_target, y = tex, color = Method)) +
+stck_tex_g_plot <- data %>%
+    ggplot(aes(x = factor(num_target), y = niter, fill = factor(isd))) +
+    geom_bar(stat = "identity") +
+    scale_y_continuous(trans = "log10")
+    # geom_line() +
+    # facet_grid(~factor(la)) +
+    # scale_x_continuous(breaks = seq(0, 10, by = 1)) +
+    # ylab("Time of Execution (s)") +
+    # xlab("Target Number")
+
+stck_tex_g_plot
+```
+
 ### Discussion
 
 ## Performance
 ### Large Problems
 ### Accuracy
+```{r}
+# Training accuracy per Method
+tr_acc_g_plot <- data %>%
+    ggplot(aes(x = Method, y = tr_acc, color = Method)) +
+    geom_boxplot() +
+    geom_jitter(shape = 16, position = position_jitter(0.2)) +
+    facet_grid(~factor(la)) +
+    scale_y_continuous(trans = "log10")
 
+tr_acc_g_plot
+```
+
+```{r}
+# Test accuracy per Method
+te_acc_g_plot <- data %>%
+    ggplot(aes(x = Method, y = te_acc, color = Method)) +
+    geom_boxplot() +
+    geom_jitter(shape = 16, position = position_jitter(0.2)) +
+    facet_grid(~factor(la)) +
+    scale_y_continuous(trans = "log10")
+
+te_acc_g_plot
+```
