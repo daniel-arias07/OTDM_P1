@@ -44,6 +44,33 @@ boxplot_la_l_opt
 
 
 ```{r}
+#Other option
+
+# Lambda vs L*
+
+boxplot_la_l_opt <- data %>%
+    ggplot(aes(x = Method, y = L., color =factor(la))) +
+    geom_boxplot()  +
+    ylab("Optiaml L") +
+    theme(
+        legend.title = element_text(color = "blue", size = 10),
+        legend.text = element_text(color = "red")
+    )
+
+boxplot_la_l_opt
+
+```
+
+
+
+```{r}
+table_d<- data %>%
+  group_by(la,Method) %>% 
+  summarize(mean_L = mean(L.))
+table_d
+```
+
+```{r}
 # Iterations per Method for each target number
 
 g_plot <- data %>%
